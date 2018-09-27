@@ -33,7 +33,7 @@ A1.strokeWidth = 10
 A1:setStrokeColor( 255/255, 128/255, 0)
 
 local Ahole1 = display.newPolygon( A1x, halfH-60, AholeVertices )
-Ahole1.fill = { type="image", filename="Icon-80.png" }
+Ahole1.fill = { type="image", filename="mountains.jpg" }
 Ahole1.strokeWidth = 10
 Ahole1:setStrokeColor( 255/255, 255/255, 0 )
 
