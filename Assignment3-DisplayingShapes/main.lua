@@ -1,0 +1,4 @@
+-- Tittle: Assignment3 Designing Shapes in Lua
+-- Name: Sascha Motz
+-- Course: ICS20
+-- This program displays 3 shapes, 
