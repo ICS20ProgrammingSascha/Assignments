@@ -27,10 +27,12 @@ local AholeVertices = { 50,50, 100,50, 100,100, 50,100 }
 local S1 = display.newPolygon( S1x, halfH, Svertices )
 S1.strokeWidth = 10
 S1:setStrokeColor( 1, 0, 0 )
+S1:setFillColor( 1, 0, 0 )
 
 local A1 = display.newPolygon( A1x, halfH, Avertices )
 A1.strokeWidth = 10
-A1:setStrokeColor( 255/255, 128/255, 0)
+A1:setStrokeColor( 255/255, 128/255, 0 )
+A1:setFillColor( 255/255, 128/255, 0 )
 
 local Ahole1 = display.newPolygon( A1x, halfH-60, AholeVertices )
 Ahole1.fill = { type="image", filename="mountains.jpg" }
@@ -40,20 +42,24 @@ Ahole1:setStrokeColor( 255/255, 128/255, 0 )
 local S2 = display.newPolygon( S2x, halfH, Svertices )
 S2.strokeWidth = 10
 S2:setStrokeColor( 255/255, 255/255, 0  )
+S2:setFillColor( 255/255, 255/255, 0 )
 
 local C1 = display.newPolygon( C1x, halfH, Cvertices )
 C1.strokeWidth = 10
 C1:setStrokeColor( 0, 255/255, 0 )
+C1:setFillColor( 0, 255/255, 0 )
 
 local H1 = display.newPolygon( H1x, halfH, Hvertices )
 H1.strokeWidth = 10
 H1:setStrokeColor( 0, 0, 255/255 )
+H1:setFillColor( 0, 0, 255/255 )
 
 local A2 = display.newPolygon( A2x, halfH, Avertices )
 A2.strokeWidth = 10
 A2:setStrokeColor( 1, 0, 5  )
+A2:setFillColor( 1, 0, 5 )
 
 local Ahole2 = display.newPolygon( A2x, halfH-60, AholeVertices )
 Ahole2.fill = { type="image", filename="mountains.jpg" }
 Ahole2.strokeWidth = 10
-Ahole2:setStrokeColor( 1, 0, 0 )
+Ahole2:setStrokeColor( 1, 0, 5 )
