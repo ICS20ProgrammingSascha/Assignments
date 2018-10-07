@@ -17,7 +17,7 @@ local backgroundImage = display.newImageRect("Images/underwater.png", 2048, 1600
 textObject = display.newText( "UNDER THE SEA", display.contentWidth/2, display.contentHeight/8, nil, 70 )
 
 -- sets the colour of the text
-textObject:setTextColor(0, 0, 0)
+textObject:setTextColor(0, 255/255, 255/255)
 ---------------------------------------
 --character image with width and height
 local fish = display.newImageRect("Images/fish2.png", 200, 200)
@@ -33,16 +33,14 @@ fish.alpha = 0
 local fadeFish = 1
 local directionFish = 1
 
--- set the fish to fade out
---transition.fadeOut( fish, { time=500 } )
-
 --Function: MoveFish
 -- Input: this function accepts and event listener
---Output: none
 --Description: This function adds the scroll speed to the x-value of the fish
 local function MoveFish (event)
 	--add the scroll speed to the x-value of the fish
-	-- change the transparency of the fish every time it moves so that it fades out
+	-- change the transparency of the fish every time it moves so that it fades in/out
+	--make the fade in/out speeds different
+	--make the fish go across the display non-stop
 	if  fish.alpha == 1 then
 		fadeFish = 0
 	end
@@ -100,18 +98,16 @@ scrollSpeedSeaturtle = 1
 seaturtle.alpha = 0
 local fadeSeaturtle = 1
 
--- set the Seaturtle to fade out
---transition.fadeOut( seaturtle, { time=500 } )
-
 --Function: MoveSeaturtle
 -- Input: this function accepts and event listener
---Output: none
---Description: This function adds the scroll speed to the x-value of the seaturtle
+--Description: This function adds the scroll speed to the x-value and y-value of the seaturtle
 local function MoveSeaturtle (event)
-	--add the scroll speed to the x-value of the seaturtle
+	--add the scroll speed to the x-value and y-value of the seaturtle
 	seaturtle.x = seaturtle.x - scrollSpeedSeaturtle - 1
 	seaturtle.y = seaturtle.y - scrollSpeedSeaturtle - 1
-	-- change the transparency of the seaturtle every time it moves so that it fades out
+	-- change the transparency of the seaturtle so that it fades in/out
+	--make the seaturtle go on a diagonal line
+	--the fade in/out at different speeds
 	if  seaturtle.alpha == 1 then
 		fadeSeaturtle = 0
 	end
@@ -127,7 +123,7 @@ local function MoveSeaturtle (event)
 
 end
 
---MoveFish will be called over and over again
+--MoveSeaturtle will be called over and over again
 Runtime:addEventListener("enterFrame", MoveSeaturtle)
 
 
@@ -139,4 +135,37 @@ local pufferFish = display.newImageRect("Images/pufferFish2.png", 200, 200)
 pufferFish.x = display.contentWidth/1.15
 pufferFish.y = display.contentHeight/1.6
 
+--local variable for the size of the PufferFish
+--local variable for count
+local increasePufferFish = 1
+local pufferFishCount = 10
 
+--Function: ChangePufferFishSize
+-- Input: this function accepts and event listener
+--Description: This function changes the size of the x-value and y-value of the PufferFish
+local function ChangePufferFishSize(event)
+	-- start the Puffer fish at 1 
+	--increse the size by 1.05,1.05 on a count of 10
+	--else the PufferFish will start at 0
+    --decrease the size by 0.95,0.95 on a coynt down of 10
+    if increasePufferFish == 1 then
+    	pufferFish:scale(1.05,1.05)
+    else
+    	pufferFish:scale(0.95,0.95)
+    end
+
+ 	pufferFishCount = pufferFishCount - 1
+
+    if pufferFishCount == 0 then
+		if increasePufferFish == 1 then
+			increasePufferFish = 0
+        else
+			increasePufferFish = 1
+		end
+        pufferFishCount = 10
+    end
+ 
+end
+
+--ChangePufferFishSize will be called over and over again
+Runtime:addEventListener("enterFrame", ChangePufferFishSize)
