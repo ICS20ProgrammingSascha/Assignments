@@ -19,54 +19,58 @@ textObject = display.newText( "UNDER THE SEA", display.contentWidth/2, display.c
 -- sets the colour of the text
 textObject:setTextColor(0, 255/255, 255/255)
 ---------------------------------------
---character image with width and height
+--fish image with width and height
 local fish = display.newImageRect("Images/fish2.png", 200, 200)
 --set initial x and y position of fish
 fish.x = display.contentWidth/10
 fish.y = display.contentHeight/3
 
 -- variable for speed of the fish
-scrollSpeedFish = 1
+scrollSpeedFish = 4
 
--- set the image to be transparent
+-- set the transparency of the fish
 fish.alpha = 0
+-- controls if fish is more or less transparent
 local fadeFish = 1
+-- controls the x direction of the fish
 local directionFish = 1
 
 --Function: MoveFish
 -- Input: this function accepts and event listener
 --Description: This function adds the scroll speed to the x-value of the fish
 local function MoveFish (event)
-	--add the scroll speed to the x-value of the fish
-	-- change the transparency of the fish every time it moves so that it fades in/out
-	--make the fade in/out speeds different
-	--make the fish go across the display non-stop
+	-- make the fish more transparent if it is fully visible
 	if  fish.alpha == 1 then
 		fadeFish = 0
 	end
+    -- make the fish less transparent if it is fully transparent
     if fish.alpha == 0 then
     	fadeFish = 1
 	end
 
+	-- change the transparency of the fish based on fadeFish
     if fadeFish == 1 then
         fish.alpha = fish.alpha + 0.02
     else
        fish.alpha = fish.alpha - 0.02
     end
     
+    -- Flip fish and change its direction if hits right side of screen
     if fish.x > 1000 then
 		directionFish = 0
 		fish.xScale = -1
     end
+    -- Flip fish and change its direction if hits left side of screen
     if fish.x < 0 then
     	directionFish = 1
 		fish.xScale = 1	
 	end
 
-    if directionFish == 1 then
-    	fish.x = fish.x - scrollSpeedFish + 5
+    -- change x position of fish based on directionFish
+	if directionFish == 1 then
+    	fish.x = fish.x + scrollSpeedFish
     else
-    	fish.x = fish.x - scrollSpeedFish - 5
+    	fish.x = fish.x - scrollSpeedFish
     end
 
 end
@@ -75,9 +79,9 @@ end
 Runtime:addEventListener("enterFrame", MoveFish)
 ------------------------------------------------------
 
---charcter image with width and height
+--star fish image with width and height
 local starfish = display.newImageRect("Images/starfish.png", 200, 200)
---set initaial x and y position of starfish
+--set initial x and y position of starfish
 starfish.x = display.contentWidth/5.5
 starfish.y = display.contentHeight/1.15
 
@@ -85,36 +89,38 @@ starfish.y = display.contentHeight/1.15
 transition.to( starfish, { rotation = starfish.rotation-9000, time=50000, onComplete=spinImage } )
 -----------------------------------------------------------------------------------------------------
 
---charcter image with width and height
+--sea turtle image with width and height
 local seaturtle = display.newImageRect("Images/seaturtle.png", 200, 200)
---set initaial x and y position of seaturtle
+--set initial x and y position of seaturtle
 seaturtle.x = display.contentWidth/1.5
 seaturtle.y = display.contentHeight/1.1
 
 -- variable for speed of the seaturtle
-scrollSpeedSeaturtle = 1
+scrollSpeedSeaturtle = 2
 
 -- set the image to be transparent
 seaturtle.alpha = 0
+-- controls if sea turtle is more or less transparent
 local fadeSeaturtle = 1
 
 --Function: MoveSeaturtle
 -- Input: this function accepts and event listener
 --Description: This function adds the scroll speed to the x-value and y-value of the seaturtle
 local function MoveSeaturtle (event)
-	--add the scroll speed to the x-value and y-value of the seaturtle
-	seaturtle.x = seaturtle.x - scrollSpeedSeaturtle - 1
-	seaturtle.y = seaturtle.y - scrollSpeedSeaturtle - 1
-	-- change the transparency of the seaturtle so that it fades in/out
-	--make the seaturtle go on a diagonal line
-	--the fade in/out at different speeds
+	--add the scroll speed to the x-value and y-value of the seaturtle. makes the seaturtle go on a diagonal line
+	seaturtle.x = seaturtle.x - scrollSpeedSeaturtle
+	seaturtle.y = seaturtle.y - scrollSpeedSeaturtle
+	
+	-- make the sea turtle more transparent if it is fully visible
 	if  seaturtle.alpha == 1 then
 		fadeSeaturtle = 0
 	end
-    if seaturtle.alpha == 0 then
+    -- make the sea turtle less transparent if it is fully transparent
+	if seaturtle.alpha == 0 then
     	fadeSeaturtle= 1
 	end
 
+    -- change the sea turtle transparency based on fadeSeaTurtle 
     if fadeSeaturtle == 1 then
         seaturtle.alpha = seaturtle.alpha + 0.01
     else
@@ -126,36 +132,36 @@ end
 --MoveSeaturtle will be called over and over again
 Runtime:addEventListener("enterFrame", MoveSeaturtle)
 
-
-
 ---------------------------------------------------------------------
---charcter image with width and height
+--puffer fish image with width and height
 local pufferFish = display.newImageRect("Images/pufferFish2.png", 200, 200)
 --set initaial x and y position of pufferfish
 pufferFish.x = display.contentWidth/1.15
 pufferFish.y = display.contentHeight/1.6
 
 --local variable for the size of the PufferFish
---local variable for count
 local increasePufferFish = 1
+--local variable for puffer fish count
 local pufferFishCount = 10
 
 --Function: ChangePufferFishSize
 -- Input: this function accepts and event listener
 --Description: This function changes the size of the x-value and y-value of the PufferFish
 local function ChangePufferFishSize(event)
-	-- start the Puffer fish at 1 
-	--increse the size by 1.05,1.05 on a count of 10
-	--else the PufferFish will start at 0
-    --decrease the size by 0.95,0.95 on a coynt down of 10
+	--puffer fish initially starts increasing because increasePufferFish == 1) 
+	--increse the size by 1.05,1.05 ten times
+	--else decrease size of puffer Fish when increasePufferFish == 0
+    --decrease the size by 0.95,0.95 ten times
     if increasePufferFish == 1 then
     	pufferFish:scale(1.05,1.05)
     else
     	pufferFish:scale(0.95,0.95)
     end
 
+ 	-- decrease puffer fish count
  	pufferFishCount = pufferFishCount - 1
 
+    -- change direction of size when pufferFishCount is zero and reset pufferFishCount to 10 
     if pufferFishCount == 0 then
 		if increasePufferFish == 1 then
 			increasePufferFish = 0
