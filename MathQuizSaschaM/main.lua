@@ -164,6 +164,22 @@ local function DecreaseLives()
 
 end
 
+-----------------------------------------------
+-- function that operates decrese lives
+local function WinGame()
+	
+	-- Cancel the timer remove the third heart by making it invisible
+		timer.cancel( countDownTimer )
+		numericField.isVisible = false
+		wonGameSoundChannel = audio.play(wonGameSound)
+		 -- Stop the music
+        audio.stop( bkgMusicChannel )
+		wonGame = display.newImageRect("Images/wonGame.jpg", display.contentWidth, display.contentHeight)
+		wonGame.x = display.contentWidth * 1 / 2
+		wonGame.y = display.contentHeight * 1 / 2
+end
+------------------------------------------------------
+
 -- function that operates numeric field lives
 local function NumericFieldListener(event)
 
@@ -184,6 +200,11 @@ local function NumericFieldListener(event)
 			correctSoundChannel = audio.play(correctSound)
 			timer.performWithDelay(2000, HideCorrect)
 			score = score + 1
+
+			-- call WinGame
+			if (score == 2) then
+				WinGame()
+			end
 
 			-- displaying the text object for the score
 			scoreObject.text = "Score:" .. score
