@@ -36,7 +36,7 @@ local clockText
 local countDownTimer
 
 -- varibles of the images
-local lives = 4
+local lives = 3
 local heart1
 local heart2
 local heart3
@@ -91,32 +91,61 @@ local function AskQuestion()
 	secondsLeft = totalSeconds
 
 	-- generate 2 random numbers between a max. and a min. number
-	randomNumber1 = math.random(10,20)
-	randomNumber2 = math.random(10,20)
-	randomOperator = math.random(1,3)
+	randomOperator = math.random(5)
 
 	if ( randomOperator == 1) then
 
-		correctAnswer = randomNumber1 + randomNumber2
+      	randomNumber1 = math.random(1,20)
+	    randomNumber2 = math.random(1,20)
 
-		-- create question in text object
-		questionObject.text = randomNumber1.. " + " ..  randomNumber2 .. " = "
+        	correctAnswer = randomNumber1 + randomNumber2
+
+			-- create question in text object
+			questionObject.text = randomNumber1.. " + " ..  randomNumber2 .. " = "
 
 	elseif ( randomOperator == 2) then
 
-		correctAnswer = randomNumber1 - randomNumber2
+      	randomNumber1 = math.random(1,20)
+	    randomNumber2 = math.random(1,20)
 
-		-- create question in text object
-		questionObject.text = randomNumber1.. " - " ..  randomNumber2 .. " = "
+		if (randomNumber1 >= randomNumber2) then
+
+        	correctAnswer = randomNumber1 - randomNumber2
+
+			-- create question in text object
+			questionObject.text = randomNumber1.. " - " ..  randomNumber2 .. " = "
+	    else
+			AskQuestion()
+	    end
 
 	elseif ( randomOperator == 3) then
 
-		correctAnswer = randomNumber1 * randomNumber2
+      	randomNumber1 = math.random(1,10)
+	    randomNumber2 = math.random(1,10)
+        	correctAnswer = randomNumber1 * randomNumber2
 
-		-- create question in text object
-		questionObject.text = randomNumber1.. " * " ..  randomNumber2 .. " = "
-	end
+			-- create question in text object
+			questionObject.text = randomNumber1.. " * " ..  randomNumber2 .. " = "
 	
+	elseif ( randomOperator == 4) then
+
+      	randomNumber1 = math.random(1,100)
+	    randomNumber2 = math.random(1,100)
+			randomNumber1 = randomNumber1 - (randomNumber1 % randomNumber2)
+        	correctAnswer = randomNumber1 / randomNumber2
+
+			-- create question in text object
+			questionObject.text = randomNumber1.. " / " ..  randomNumber2 .. " = "
+
+	else
+
+		randomNumber1 = math.random(1,3)
+	    randomNumber2 = math.random(1,3)
+        	correctAnswer = randomNumber1 ^ randomNumber2
+
+			-- create question in text object
+			questionObject.text = randomNumber1.. " ^ " ..  randomNumber2 .. " = "
+	end
 end
 
 -- make the correct object visible
@@ -141,9 +170,7 @@ end
 local function DecreaseLives()
 
 	-- Cancel the timer remove the third heart by making it invisible
-	if (lives == 4) then
-		heart4.isVisible = false
-	elseif (lives == 3) then
+	if (lives == 3) then
 		heart3.isVisible = false
 	elseif (lives == 2) then
 		heart2.isVisible = false
@@ -202,7 +229,7 @@ local function NumericFieldListener(event)
 			score = score + 1
 
 			-- call WinGame
-			if (score == 2) then
+			if (score == 5) then
 				WinGame()
 			end
 
@@ -211,6 +238,7 @@ local function NumericFieldListener(event)
 			
 		else
 			-- display the inccorect text object and sound
+            incorrectObject.text = "Incorrect! The answer is ".. correctAnswer
 			incorrectObject.isVisible = true
 			incorrectSoundChannel = audio.play(incorrectSound)
 			timer.performWithDelay(2000, HideIncorrect)
@@ -275,7 +303,7 @@ correctObject:setTextColor(255,255, 0,255, 0,255)
 correctObject.isVisible = false
 
 -- create the incorrect text object and make it invisible
-incorrectObject = display.newText( "Incorrect! Nice Try!", display.contentWidth/2, display.contentHeight*2/3, nil, 80)
+incorrectObject = display.newText( "", display.contentWidth/2, display.contentHeight*2/3, nil, 80)
 incorrectObject:setTextColor(255,255, 0,255, 0,255)
 incorrectObject.isVisible = false
 
@@ -305,11 +333,6 @@ heart2.y = display.contentHeight * 1 / 7
 heart3 = display.newImageRect("Images/heart.png", 100, 100)
 heart3.x = display.contentWidth * 5 / 8
 heart3.y = display.contentHeight * 1 / 7
-
---create the lives to display on the screen
-heart4 = display.newImageRect("Images/heart.png", 100, 100)
-heart4.x = display.contentWidth * 4 / 8
-heart4.y = display.contentHeight * 1 / 7
 
 -- call the function to ask a new question
 AskQuestion()
