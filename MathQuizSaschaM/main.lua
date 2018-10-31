@@ -1,8 +1,8 @@
 -- Title: MathQuiz
 -- Name: Sascha Motz
 -- Course: ICS2O
--- This program displays a math question and asks the user to answer in a numeric textfield.
--- terminal.
+-- This program displays a math question and asks the user 
+-- to answer in a numeric textfield terminal.
 
 -- hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
@@ -10,9 +10,9 @@ display.setStatusBar(display.HiddenStatusBar)
 --sets the background colour
 display.setDefault("background", 255/255, 153/255, 255/255)
 
---------------------------------------------------------------------------------------------
+-----------------------------------------------------------
 -- LOCAL VARIABLES
---------------------------------------------------------------------------------------------
+-----------------------------------------------------------
 
 -- create local variables
 local questionObject
@@ -88,40 +88,52 @@ local speedSoundChannel
 -- create fuction to ask the question
 local function AskQuestion()
 
+	-- controls the amount of seconds left
 	secondsLeft = totalSeconds
 
 	-- generate 2 random numbers between a max. and a min. number
 	randomOperator = math.random(5)
 
+	-- creating the random operator 1
 	if ( randomOperator == 1) then
 
+		-- creating the two random numbers
       	randomNumber1 = math.random(1,20)
 	    randomNumber2 = math.random(1,20)
 
+	    	-- making the correct answer equal the equation
         	correctAnswer = randomNumber1 + randomNumber2
 
 			-- create question in text object
 			questionObject.text = randomNumber1.. " + " ..  randomNumber2 .. " = "
 
+	-- creating the random operator 2
 	elseif ( randomOperator == 2) then
 
+		-- creating the two random numbers
       	randomNumber1 = math.random(1,20)
 	    randomNumber2 = math.random(1,20)
 
+	    -- controling the random numbers to make sure the first number is bigger
+	    -- than the second to avoid negatives.
 		if (randomNumber1 >= randomNumber2) then
 
+			-- making the correct answer equal the equation
         	correctAnswer = randomNumber1 - randomNumber2
 
 			-- create question in text object
 			questionObject.text = randomNumber1.. " - " ..  randomNumber2 .. " = "
 	    else
+	    	-- Calling ask question
 			AskQuestion()
 	    end
 
 	elseif ( randomOperator == 3) then
 
+		-- creating the two random numbers
       	randomNumber1 = math.random(1,10)
 	    randomNumber2 = math.random(1,10)
+	    	-- making the correct answer equal the equation
         	correctAnswer = randomNumber1 * randomNumber2
 
 			-- create question in text object
@@ -129,9 +141,14 @@ local function AskQuestion()
 	
 	elseif ( randomOperator == 4) then
 
+		-- creating the two random numbers
       	randomNumber1 = math.random(1,100)
 	    randomNumber2 = math.random(1,100)
+
+	    	-- making the equation to avoid decimals
 			randomNumber1 = randomNumber1 - (randomNumber1 % randomNumber2)
+
+			-- making the correct answer equal the equation
         	correctAnswer = randomNumber1 / randomNumber2
 
 			-- create question in text object
@@ -139,8 +156,11 @@ local function AskQuestion()
 
 	else
 
+		-- creating the two random numbers
 		randomNumber1 = math.random(1,3)
 	    randomNumber2 = math.random(1,3)
+
+	    	-- making the correct answer equal the equation
         	correctAnswer = randomNumber1 ^ randomNumber2
 
 			-- create question in text object
@@ -150,43 +170,55 @@ end
 
 -- make the correct object visible
 local function HideCorrect()
+	-- make the object invisible
 	correctObject.isVisible = false
+	-- Call the function AskQuestion()
 	AskQuestion()
 end
 
 -- make the incorrect object visible
 local function HideIncorrect()
+	-- make the object invisible
 	incorrectObject.isVisible = false
+	-- Call the function AskQuestion()
 	AskQuestion()
 end
 
 -- make the speed object visible
 local function HideSpeed()
+	-- make the object invisible
 	speedObject.isVisible = false
+	-- Call the function AskQuestion()
 	AskQuestion()
 end
 
 -- function that operates decrese lives
 local function DecreaseLives()
 
-	-- Cancel the timer remove the third heart by making it invisible
+	-- make heart 3 invisble
 	if (lives == 3) then
 		heart3.isVisible = false
+	-- make heart 2 invisble
 	elseif (lives == 2) then
 		heart2.isVisible = false
+	-- make heart 1 invisble
 	elseif (lives == 1) then
 		heart1.isVisible = false
+		-- cancel the countdown timer
 		timer.cancel( countDownTimer )
+		-- numeric field is invisible
 		numericField.isVisible = false
+		-- the game over sound
 		gameOverSoundChannel = audio.play(gameOverSound)
-		 -- Stop the music
+		 -- Stop the  bkg music
         audio.stop( bkgMusicChannel )
+        -- display the game over image
 		gameOver = display.newImageRect("Images/gameOver.png", display.contentWidth, display.contentHeight)
 		gameOver.x = display.contentWidth * 1 / 2
 		gameOver.y = display.contentHeight * 1 / 2
 	end
 
-	-- reset the number of seconds left
+	-- decrese the number of lives by 1
 	lives = lives - 1
 
 end
@@ -197,10 +229,13 @@ local function WinGame()
 	
 	-- Cancel the timer remove the third heart by making it invisible
 		timer.cancel( countDownTimer )
+		-- make numberic field lister invisible
 		numericField.isVisible = false
+		-- play win game sound
 		wonGameSoundChannel = audio.play(wonGameSound)
-		 -- Stop the music
+		 -- Stop the bkg music
         audio.stop( bkgMusicChannel )
+        -- display the win game image
 		wonGame = display.newImageRect("Images/wonGame.jpg", display.contentWidth, display.contentHeight)
 		wonGame.x = display.contentWidth * 1 / 2
 		wonGame.y = display.contentHeight * 1 / 2
@@ -223,13 +258,18 @@ local function NumericFieldListener(event)
 
 			-- if the users answer and the correct answer are the same:
 		if (userAnswer == correctAnswer) then
+			-- display the correct object
 			correctObject.isVisible = true
+			-- play the correct sound
 			correctSoundChannel = audio.play(correctSound)
+			-- perform with 2000 delay
 			timer.performWithDelay(2000, HideCorrect)
+			-- add 1 to the score
 			score = score + 1
 
 			-- call WinGame
 			if (score == 5) then
+				-- Call WinGame()
 				WinGame()
 			end
 
@@ -237,10 +277,13 @@ local function NumericFieldListener(event)
 			scoreObject.text = "Score:" .. score
 			
 		else
-			-- display the inccorect text object and sound
+			-- display the inccorect text object
             incorrectObject.text = "Incorrect! The answer is ".. correctAnswer
+            -- make the object visible
 			incorrectObject.isVisible = true
+			-- play incorrect sound
 			incorrectSoundChannel = audio.play(incorrectSound)
+			-- play with 2000 delay
 			timer.performWithDelay(2000, HideIncorrect)
 
 			-- call the function to decrease lives
@@ -267,9 +310,11 @@ local function UpdateTime()
 		-- call the function to decrease lives
 		DecreaseLives()
 
-		-- displays the speed object and sound
+		-- displays the speed object
 		speedObject.isVisible = true
+		-- play the correct sound
 		speedSoundChannel = audio.play(speedSound)
+		-- perform with 2000 delay
 		timer.performWithDelay(2000, HideSpeed)
 	end
 end
