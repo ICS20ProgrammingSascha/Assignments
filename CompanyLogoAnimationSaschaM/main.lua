@@ -13,14 +13,14 @@ local logoSound = audio.loadSound("Sounds/logoSound.aup" )
 local logoSoundChannel
 
 --add the logo image
-local logo = display.newImageRect("Images/CompanyLogoSaschaM.png", 600, 600)
+local logo = display.newImageRect("Images/CompanyLogoSaschaM@2x.png", 600, 600)
 
 --set initial x and y position of the logo
 logo.x = -500
 logo.y = display.contentHeight/2
 
 -- variable for speed of the logo
-scrollSpeedLogo = 8
+scrollSpeedLogo = 9
 
 -- set the transparency of the Logo
 logo.alpha = 0
