@@ -8,7 +8,7 @@ display.setStatusBar(display.HiddenStatusBar)
 display.setDefault("background", 192/255, 192/255, 192/255 )
 
 -- Logo sound
-local logoSound = audio.loadSound("Sounds/logoSound.aup" ) 
+local logoSound = audio.loadSound("Sounds/logoSound2.mp3" ) 
 -- Setting a variable to an mp3 file
 local logoSoundChannel
 
@@ -55,7 +55,6 @@ local function MoveLogo (event)
     else
     	logo.x = logo.x - scrollSpeedLogo
     end
-
 end
 
 -- play sound effect
