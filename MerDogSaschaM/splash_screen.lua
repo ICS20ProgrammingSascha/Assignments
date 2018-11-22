@@ -11,22 +11,11 @@ local composer = require( "composer" )
 -- Name the Scene
 sceneName = "splash_screen"
 
+-- Create Scene Object
+local scene = composer.newScene( sceneName )
+
 -- hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
-
---add the logo image
-local logo = display.newImageRect("Images/CompanyLogoSaschaM.png", 600, 600)
-
--- variable for speed of the logo
-local scrollSpeedLogo = 9
-
--- set the transparency of the Logo
-logo.alpha = 0
--- controls if logo is more or less transparent
-local fadeLogo = 1
--- controls the x direction of the logo
-local directionLogo = 1
-
 
 
 --------------------------------------------
@@ -37,12 +26,25 @@ local directionLogo = 1
 local logoSound = audio.loadSound("Sounds/logoSound2.mp3" ) 
 -- Setting a variable to an mp3 file
 local logoSoundChannel = audio.play(logoSound)
---------------------------------------------
+
+--------------------------------------------------------------------------------------------
+-- LOCAL VARIABLES
+--------------------------------------------------------------------------------------------
+--add the logo image
+local logo
+-- controls if logo is more or less transparent
+local fadeLogo = 1
+-- controls the x direction of the logo
+local directionLogo = 1
+
+
+-- variable for speed of the logo
+local scrollSpeedLogo = 9
+
 
 -----------------------------------------------------------------------------------------
 
--- Create Scene Object
-local scene = composer.newScene( sceneName )
+
 --------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
@@ -75,11 +77,6 @@ local function MoveLogo (event)
     end
 end
 
---MoveLogo will be called 
-Runtime:addEventListener("enterFrame", MoveLogo)
-
---make logo spin
-transition.to( logo, { rotation = logo.rotation-1440, time=17000, onComplete=spinImage } )
 
 
 -- The function that will go to the main menu 
@@ -87,8 +84,7 @@ local function gotoMainMenu()
     composer.gotoScene( "main_menu" )
 end
 
---Calling mainMenu
---gotoMainMenu()
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -102,12 +98,15 @@ function scene:create( event )
     -- sets the background colour
     display.setDefault("background", 192/255, 192/255, 192/255 )
 
-    -- Insert the logo image
-    logo = display.newImageRect("Images/CompanyLogoSaschaM@2x.png", 600, 600)
+    -- Insert the logo image    
+    logo = display.newImageRect("Images/CompanyLogoSaschaM.png", 600, 600)
 
     --set initial x and y position of the logo
     logo.x = -500
     logo.y = display.contentHeight/2
+
+    -- set the transparency of the Logo
+    logo.alpha = 0
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( logo )
@@ -140,6 +139,12 @@ function scene:show( event )
         -- Call the moveBeetleship function as soon as we enter the frame.
         Runtime:addEventListener("enterFrame", MoveLogo)
 
+
+
+        --make logo spin
+        transition.to( logo, { rotation = logo.rotation-1440, time=17000, onComplete=spinImage } )
+
+
         -- Go to the main menu screen after the given time.
         timer.performWithDelay ( 3000, gotoMainMenu)          
         
@@ -166,7 +171,8 @@ function scene:hide( event )
     -----------------------------------------------------------------------------------------
 
     -- Called immediately after scene goes off screen.
-    --elseif ( phase == "did" ) then
+    elseif ( phase == "did" ) then
+        Runtime:removeEventListener("enterFrame", MoveLogo)
         
     end
 
