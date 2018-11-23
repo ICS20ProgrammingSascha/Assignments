@@ -35,6 +35,7 @@ local bkg
 local playButton
 local creditsButton
 local instructionsButton
+local muteButton
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -57,6 +58,13 @@ end
 local function InstructionsScreenTransition( )       
     composer.gotoScene( "instructions_screen", {effect = "fromLeft", time = 500})
 end 
+
+--local function MuteButton( )
+    --if (touch.phase == "began") then
+        --audio.pause( [bkgMusicChannel] )
+    --end
+--end
+
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -87,6 +95,14 @@ function scene:create( event )
     -- Send the background image to the back layer so all other objects can be on top
     --bkg_image:toBack()
 
+    ----------------------------------------------------------------------------------------
+    -- SOUNDS
+    ----------------------------------------------------------------------------------------
+    -- play sound effect
+    -- Logo sound
+    local bkgMusic = audio.loadSound("Sounds/bkgMusic.mp3" ) 
+    -- Setting a variable to an mp3 file
+    local bkgMusicChannel = audio.play(bkgMusic)
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
     -----------------------------------------------------------------------------------------   
@@ -103,7 +119,7 @@ function scene:create( event )
             overFile = "Images/StartPressed.png",
 
             width = 200,
-            height = 100,
+            height = 150,
 
             -- When the button is released, call the Level1 screen transition function
             onRelease = Level1ScreenTransition          
@@ -123,7 +139,7 @@ function scene:create( event )
             overFile = "Images/CreditsPressedThomasW.png",
 
             width = 200,
-            height = 100,
+            height = 150,
 
             -- When the button is released, call the Credits transition function
             onRelease = CreditsTransition
@@ -142,10 +158,28 @@ function scene:create( event )
             overFile = "Images/InstrucPressedSM.png",
 
             width = 200,
-            height = 100,
+            height = 150,
 
             -- When the button is released, call the Level1 screen transition function
             onRelease = InstructionsScreenTransition          
+        } )
+    -----------------------------------------------------------------------------------------
+    -- Creating mute Button
+    muteButton = widget.newButton( 
+        {
+            -- Set its position on the screen relative to the screen size
+            x = display.contentWidth*1.5/10,
+            y = display.contentHeight*1.3/10,
+
+            -- Insert the images here
+            defaultFile = "Images/MuteButtonUnpressed.png",
+            overFile = "Images/MuteButtonPressed.png",
+
+            width = 200,
+            height = 110,
+
+            --When the button is released, call the Credits transition function
+            --onRelease = CreditsTransition
         } )
 
     -----------------------------------------------------------------------------------------
@@ -154,6 +188,7 @@ function scene:create( event )
     sceneGroup:insert( playButton )
     sceneGroup:insert( creditsButton )
     sceneGroup:insert( instructionsButton )
+    sceneGroup:insert( muteButton )
 
 end -- function scene:create( event )   
 
@@ -181,6 +216,9 @@ function scene:show( event )
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
+    -- start the bkg music
+    bkgMusicChannel = audio.play(bkgMusic)
+
     elseif ( phase == "did" ) then       
         
 
