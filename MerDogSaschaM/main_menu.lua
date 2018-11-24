@@ -59,12 +59,17 @@ local function InstructionsScreenTransition( )
     composer.gotoScene( "instructions_screen", {effect = "fromLeft", time = 500})
 end 
 
---local function MuteButton( )
-    --if (touch.phase == "began") then
-        --audio.pause( [bkgMusicChannel] )
-    --end
---end
+local function MuteButtonPlay(touch)
+    if (touch.phase == "began") then
+        audio.setVolume(0)
+    end
+end
 
+local function MuteButtonPause(touch)
+    if (touch.phase == "began") then
+        audio.setVolume(1)
+    end
+end
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
@@ -102,7 +107,7 @@ function scene:create( event )
     -- Logo sound
     local bkgMusic = audio.loadSound("Sounds/bkgMusic.mp3" ) 
     -- Setting a variable to an mp3 file
-    local bkgMusicChannel = audio.play(bkgMusic)
+    local bkgMusicChannel = audio.play(bkgMusic, {loops= 10})
     -----------------------------------------------------------------------------------------
     -- BUTTON WIDGETS
     -----------------------------------------------------------------------------------------   
