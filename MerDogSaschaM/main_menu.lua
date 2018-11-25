@@ -59,16 +59,20 @@ local function InstructionsScreenTransition( )
     composer.gotoScene( "instructions_screen", {effect = "fromLeft", time = 500})
 end 
 
-local function MuteButtonPlay(touch)
+local function MuteButtonPause(touch)
     if (touch.phase == "began") then
         audio.setVolume(0)
     end
 end
 
-local function MuteButtonPause(touch)
+local function MuteButtonPlay(touch)
     if (touch.phase == "began") then
         audio.setVolume(1)
     end
+end
+
+if muteButtonPressed then
+    MuteButtonPause()
 end
 
 -----------------------------------------------------------------------------------------
