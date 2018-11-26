@@ -65,11 +65,15 @@ local function MuteButton()
         audio.setVolume(0)
         soundOn = 0
     else
-        sddsf = 9
         audio.setVolume(1)
         soundOn = 1
     end
 end
+
+local function MuteTransition()
+    un
+
+local function UnmuteTransition()
 
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
