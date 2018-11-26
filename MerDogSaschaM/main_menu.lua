@@ -36,6 +36,7 @@ local playButton
 local creditsButton
 local instructionsButton
 local muteButton
+local soundOn = 1
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -59,20 +60,15 @@ local function InstructionsScreenTransition( )
     composer.gotoScene( "instructions_screen", {effect = "fromLeft", time = 500})
 end 
 
-local function MuteButtonPause(touch)
-    if (touch.phase == "began") then
+local function MuteButton()
+    if (soundOn) then
         audio.setVolume(0)
-    end
-end
-
-local function MuteButtonPlay(touch)
-    if (touch.phase == "began") then
+        soundOn = 0
+    else
+        sddsf = 9
         audio.setVolume(1)
+        soundOn = 1
     end
-end
-
-if muteButtonPressed then
-    MuteButtonPause()
 end
 
 -----------------------------------------------------------------------------------------
@@ -188,7 +184,7 @@ function scene:create( event )
             height = 110,
 
             --When the button is released, call the Credits transition function
-            --onRelease = CreditsTransition
+            onRelease = MuteButton
         } )
 
     -----------------------------------------------------------------------------------------
