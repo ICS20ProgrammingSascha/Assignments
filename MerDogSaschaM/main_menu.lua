@@ -71,6 +71,11 @@ local function MuteButton()
     end
 end
 
+local function MuteTransition()
+    un
+
+local function UnmuteTransition()
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
