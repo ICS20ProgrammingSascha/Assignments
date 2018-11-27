@@ -36,6 +36,7 @@ local playButton
 local creditsButton
 local instructionsButton
 local muteButton
+local muteTransition
 local soundOn = 1
 
 -----------------------------------------------------------------------------------------
@@ -65,7 +66,6 @@ local function MuteButton()
         audio.setVolume(0)
         soundOn = 0
     else
-        sddsf = 9
         audio.setVolume(1)
         soundOn = 1
     end
@@ -177,8 +177,8 @@ function scene:create( event )
             y = display.contentHeight*1.3/10,
 
             -- Insert the images here
-            defaultFile = "Images/MuteButtonUnpressed.png",
-            overFile = "Images/MuteButtonPressed.png",
+            defaultFile = "Images/Mute.png",
+            overFile = "Images/Unmute.png",
 
             width = 200,
             height = 110,
@@ -186,8 +186,7 @@ function scene:create( event )
             --When the button is released, call the Credits transition function
             onRelease = MuteButton
         } )
-
-    -----------------------------------------------------------------------------------------
+      ------------------------------------------------------------------------------------------
 
     -- Associating button widgets with this scene
     sceneGroup:insert( playButton )
