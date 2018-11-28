@@ -70,12 +70,6 @@ local function MuteButton()
         soundOn = 1
     end
 end
-
-local function MuteTransition()
-    un
-
-local function UnmuteTransition()
-
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
