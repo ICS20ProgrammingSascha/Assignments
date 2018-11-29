@@ -139,8 +139,8 @@ function scene:create( event )
             y = display.contentHeight*7/8,
 
             -- Insert the images here
-            defaultFile = "Images/CreditsUnpressedThomasW.png",
-            overFile = "Images/CreditsPressedThomasW.png",
+            defaultFile = "Images/CreditsUnpressedSaschaM.png",
+            overFile = "Images/CreditsPressedSaschaM.png",
 
             width = 200,
             height = 150,
@@ -176,8 +176,8 @@ function scene:create( event )
             y = display.contentHeight*1.3/10,
 
             -- Insert the images here
-            defaultFile = "Images/Mute.png",
-            overFile = "Images/Unmute.png",
+            defaultFile = "Images/MuteUnpressed.png",
+            overFile = "Images/MutePressed.png",
 
             width = 200,
             height = 110,
